@@ -25,8 +25,8 @@ function App() {
         </div>
       </header>
 
-      {/* Navigation Tabs - Sticky */}
-      <div className="bg-gradient-to-b from-slate-900 to-slate-900/95 backdrop-blur-md sticky top-[60px] sm:top-[81px] z-[45] border-b border-purple-500/20 will-change-transform">
+      {/* Navigation Tabs - Fixed */}
+      <div className="bg-gradient-to-b from-slate-900 to-slate-900/95 backdrop-blur-md fixed top-[60px] sm:top-[81px] left-0 right-0 z-[45] border-b border-purple-500/20">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex space-x-2 sm:space-x-4">
             <button
@@ -54,7 +54,7 @@ function App() {
       </div>
 
       {/* Content */}
-      <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 mt-[49px] sm:mt-[53px]">
         {activeTab === 'rest-api' ? <ApiSection /> : <SocketSection />}
       </main>
 
