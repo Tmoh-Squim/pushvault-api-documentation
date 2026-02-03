@@ -63,4 +63,4 @@ Network: http://192.168.x.x:5173/
 
 ## License
 
-© 2026 HugeWins Gaming Platform. All rights reserved.
+© 2026 PushVault Gaming Platform. All rights reserved.

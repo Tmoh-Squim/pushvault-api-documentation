@@ -61,7 +61,7 @@ function App() {
       {/* Footer */}
       <footer className="bg-black/30 backdrop-blur-md border-t border-purple-500/20 mt-12 sm:mt-16">
         <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 text-center text-gray-500 text-xs sm:text-sm">
-          <p>© 2026 HugeWins Gaming Platform. All rights reserved.</p>
+          <p>© 2026 PushVault Gaming Platform. All rights reserved.</p>
         </div>
       </footer>
     </div>
