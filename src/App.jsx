@@ -6,7 +6,7 @@ function App() {
   const [activeTab, setActiveTab] = useState('rest-api')
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-x-hidden relative">
       {/* Header */}
       <header className="bg-black/30 backdrop-blur-md border-b border-purple-500/20 sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
@@ -26,7 +26,7 @@ function App() {
       </header>
 
       {/* Navigation Tabs - Sticky */}
-      <div className="bg-gradient-to-b from-slate-900 to-slate-900/95 backdrop-blur-sm sticky top-[60px] sm:top-[81px] z-40 border-b border-purple-500/20">
+      <div className="bg-gradient-to-b from-slate-900 to-slate-900/95 backdrop-blur-md sticky top-[60px] sm:top-[81px] z-[45] border-b border-purple-500/20 will-change-transform">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex space-x-2 sm:space-x-4">
             <button
