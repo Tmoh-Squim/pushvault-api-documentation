@@ -36,7 +36,9 @@ function PartnerApiSection() {
       request: {
         code: '123456',
         stationRef: 'SHOP_NAIROBI_01',
-        stationName: 'BetKing Nairobi CBD'
+        stationName: 'BetKing Nairobi CBD',
+        agentRef: 'AGENT_JOHN',
+        operatorRef: 'OP_NAIROBI'
       },
       response: {
         success: true,
@@ -49,6 +51,10 @@ function PartnerApiSection() {
         'Your cashier enters this code in YOUR dashboard, your backend calls us',
         'stationRef groups devices by shop — same ref = same station',
         'stationName is the display name (auto-generated if not provided)',
+        'agentRef (optional) — your internal agent ID who manages this station',
+        'operatorRef (optional) — your internal operator ID who owns this station',
+        'Agent/operator refs are stored on the station and returned in listDevices/listStations',
+        'If station already exists, agent/operator refs are updated if provided',
         'Code expires after a set time period',
         'Device screen updates instantly via WebSocket on successful activation'
       ]
@@ -81,7 +87,7 @@ function PartnerApiSection() {
       headers: {
         'X-API-Key': 'pk_your_api_key_here'
       },
-      request: '?stationRef=SHOP_NAIROBI_01',
+      request: '?stationRef=SHOP_NAIROBI_01&agentRef=AGENT_JOHN&operatorRef=OP_NAIROBI',
       response: {
         success: true,
         data: [
@@ -92,7 +98,9 @@ function PartnerApiSection() {
             station: {
               stationId: 'P-BETKING-SHOP_01',
               name: 'BetKing Nairobi CBD',
-              ref: 'SHOP_NAIROBI_01'
+              ref: 'SHOP_NAIROBI_01',
+              agentRef: 'AGENT_JOHN',
+              operatorRef: 'OP_NAIROBI'
             },
             mice: [
               {
@@ -122,6 +130,9 @@ function PartnerApiSection() {
       },
       notes: [
         'Optional query: ?stationRef=YOUR_SHOP_REF — filters devices to a specific station/shop',
+        'Optional query: ?agentRef=YOUR_AGENT_ID — filters devices managed by a specific agent',
+        'Optional query: ?operatorRef=YOUR_OPERATOR_ID — filters devices owned by a specific operator',
+        'All filters can be combined: ?agentRef=AGENT_1&stationRef=SHOP_01',
         'Use stationRef filtering for your cashier dashboard so each cashier only sees their shop\'s devices',
         'mice array includes all connected players with mouseId, balance, and active status',
         'Your cashier uses mouseId + deviceId to call /deposit or /withdraw',
@@ -130,7 +141,42 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '5. Deposit (Player Top-up)',
+      title: '5. List Stations',
+      method: 'GET',
+      path: '/api/v1/partner/stations',
+      description: 'List all your stations/shops with agent and operator references and device counts. Filter by agentRef or operatorRef to see a specific scope.',
+      headers: {
+        'X-API-Key': 'pk_your_api_key_here'
+      },
+      request: '?operatorRef=OP_NAIROBI',
+      response: {
+        success: true,
+        count: 2,
+        data: [
+          {
+            stationId: 'P-BETKING-SHOP_NAIROBI_01',
+            name: 'BetKing Nairobi CBD',
+            ref: 'SHOP_NAIROBI_01',
+            agentRef: 'AGENT_JOHN',
+            operatorRef: 'OP_NAIROBI',
+            country: 'kenya',
+            currency: 'KSh',
+            isActive: true,
+            devices: { total: 5, active: 3 },
+            createdAt: '2026-03-01T10:00:00.000Z'
+          }
+        ]
+      },
+      notes: [
+        'Optional query: ?agentRef=YOUR_AGENT_ID — filter stations by agent',
+        'Optional query: ?operatorRef=YOUR_OPERATOR_ID — filter stations by operator',
+        'devices.total = all registered devices, devices.active = currently activated',
+        'Stations are auto-created during device activation (grouped by stationRef)',
+        'Use this to build your admin/operator dashboard showing all shops'
+      ]
+    },
+    {
+      title: '6. Deposit (Player Top-up)',
       method: 'POST',
       path: '/api/v1/partner/deposit',
       description: 'Credit a player\'s balance on a device. Called by your backend when your cashier processes a deposit.',
@@ -162,7 +208,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '6. Withdraw (Player Cash-out)',
+      title: '7. Withdraw (Player Cash-out)',
       method: 'POST',
       path: '/api/v1/partner/withdraw',
       description: 'Debit a player\'s balance on a device. Called by your backend when your cashier processes a withdrawal.',
@@ -191,7 +237,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '7. Get Transactions',
+      title: '8. Get Transactions',
       method: 'GET',
       path: '/api/v1/partner/transactions',
       description: 'Get your partner transaction history with filters and pagination.',
@@ -223,7 +269,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '8. Get Summary',
+      title: '9. Get Summary',
       method: 'GET',
       path: '/api/v1/partner/summary',
       description: 'Get aggregated stats for your partner account — period totals and lifetime figures.',
