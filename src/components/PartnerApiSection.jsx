@@ -327,6 +327,9 @@ function PartnerApiSection() {
         amount: 100,
         roundId: '65f1a2b3c4d5e6f7...',
         balanceAfter: 900,
+        stationRef: 'SHOP_NAIROBI_01',
+        agentRef: 'AGENT_JOHN',
+        operatorRef: 'OP_NAIROBI',
         transactionId: 'DEBIT-DEVICE_UUID_001-65f1a2b3...',
         timestamp: '2026-03-08T12:00:00.000Z'
       },
@@ -334,6 +337,7 @@ function PartnerApiSection() {
         'Non-blocking — sent after bet is processed on our side',
         'Verify X-Signature using HMAC-SHA256 with your apiSecret',
         'transactionId is unique — use for idempotency',
+        'stationRef, agentRef, operatorRef identify which shop/agent/operator the event belongs to',
         'Your server should return { success: true } on 200',
         'Failed deliveries are logged but DO NOT block gameplay'
       ]
@@ -357,6 +361,9 @@ function PartnerApiSection() {
         multiplier: 2.5,
         roundId: '65f1a2b3c4d5e6f7...',
         balanceAfter: 1150,
+        stationRef: 'SHOP_NAIROBI_01',
+        agentRef: 'AGENT_JOHN',
+        operatorRef: 'OP_NAIROBI',
         transactionId: 'CREDIT-DEVICE_UUID_001-65f1a2b3...',
         timestamp: '2026-03-08T12:00:05.000Z'
       },
@@ -383,6 +390,9 @@ function PartnerApiSection() {
         amount: 100,
         roundId: '65f1a2b3c4d5e6f7...',
         balanceAfter: 1000,
+        stationRef: 'SHOP_NAIROBI_01',
+        agentRef: 'AGENT_JOHN',
+        operatorRef: 'OP_NAIROBI',
         transactionId: 'CREDIT-DEVICE_UUID_001-65f1a2b3...',
         timestamp: '2026-03-08T12:00:02.000Z'
       },
@@ -412,6 +422,9 @@ function PartnerApiSection() {
           { mouseId: '002', deviceId: 'DEVICE_UUID_001', amount: 200 },
           { mouseId: '005', deviceId: 'DEVICE_UUID_002', amount: 500 }
         ],
+        stationRef: 'SHOP_NAIROBI_01',
+        agentRef: 'AGENT_JOHN',
+        operatorRef: 'OP_NAIROBI',
         transactionId: 'DEBIT-sys-65f1a2b3...',
         timestamp: '2026-03-08T12:01:00.000Z'
       },
