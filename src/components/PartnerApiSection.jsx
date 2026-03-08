@@ -80,7 +80,52 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '4. List Devices',
+      title: '4. Update Device',
+      method: 'PATCH',
+      path: '/api/v1/partner/devices/update',
+      description: 'Update a device\'s custom name. Use this to label devices for your cashiers (e.g. "Terminal 1", "Front Counter").',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': 'pk_your_api_key_here'
+      },
+      request: {
+        deviceId: 'DEVICE_UUID_001',
+        customName: 'Front Counter Terminal'
+      },
+      response: {
+        success: true,
+        message: 'Device DEVICE_UUID_001 updated',
+        data: { deviceId: 'DEVICE_UUID_001', customName: 'Front Counter Terminal' }
+      },
+      notes: [
+        'customName appears in the listDevices response for easy identification',
+        'Set customName to null or empty string to clear it',
+        'Device must belong to your partner account'
+      ]
+    },
+    {
+      title: '5. Delete Device',
+      method: 'POST',
+      path: '/api/v1/partner/devices/delete',
+      description: 'Remove a device from your partner account. Device is deactivated and unlinked. Can be re-registered later.',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': 'pk_your_api_key_here'
+      },
+      request: { deviceId: 'DEVICE_UUID_001' },
+      response: {
+        success: true,
+        message: 'Device DEVICE_UUID_001 removed from your account'
+      },
+      notes: [
+        'Fails if any player on the device has a non-zero balance — withdraw all balances first',
+        'If device is active, it will be deactivated automatically',
+        'Device is unlinked from your account but not destroyed — it can be re-registered',
+        'Device UI updates instantly via WebSocket'
+      ]
+    },
+    {
+      title: '6. List Devices',
       method: 'GET',
       path: '/api/v1/partner/devices',
       description: 'List all devices registered to your partner account with activation status, station info, and connected players with balances. Filter by stationRef to show only devices at a specific shop — ideal for cashier dashboards.',
@@ -141,7 +186,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '5. List Stations',
+      title: '7. List Stations',
       method: 'GET',
       path: '/api/v1/partner/stations',
       description: 'List all your stations/shops with agent and operator references and device counts. Filter by agentRef or operatorRef to see a specific scope.',
@@ -176,7 +221,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '6. Deposit (Player Top-up)',
+      title: '8. Deposit (Player Top-up)',
       method: 'POST',
       path: '/api/v1/partner/deposit',
       description: 'Credit a player\'s balance on a device. Called by your backend when your cashier processes a deposit.',
@@ -208,7 +253,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '7. Withdraw (Player Cash-out)',
+      title: '9. Withdraw (Player Cash-out)',
       method: 'POST',
       path: '/api/v1/partner/withdraw',
       description: 'Debit a player\'s balance on a device. Called by your backend when your cashier processes a withdrawal.',
@@ -237,7 +282,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '8. Get Transactions',
+      title: '10. Get Transactions',
       method: 'GET',
       path: '/api/v1/partner/transactions',
       description: 'Get your partner transaction history with filters and pagination.',
@@ -269,7 +314,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '9. Get Summary',
+      title: '11. Get Summary',
       method: 'GET',
       path: '/api/v1/partner/summary',
       description: 'Get aggregated stats for your partner account — period totals and lifetime figures.',
