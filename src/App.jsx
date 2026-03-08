@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import ApiSection from './components/ApiSection'
 import SocketSection from './components/SocketSection'
+import PartnerApiSection from './components/PartnerApiSection'
 
 function App() {
   const [activeTab, setActiveTab] = useState('rest-api')
@@ -49,13 +50,25 @@ function App() {
             >
               🔌 Socket Events
             </button>
+            <button
+              onClick={() => setActiveTab('partner-api')}
+              className={`px-4 sm:px-6 py-3 font-semibold text-sm sm:text-base transition-all duration-200 border-b-2 ${
+                activeTab === 'partner-api'
+                  ? 'border-purple-500 text-purple-400'
+                  : 'border-transparent text-gray-400 hover:text-purple-300'
+              }`}
+            >
+              🤝 Partner API
+            </button>
           </div>
         </div>
       </div>
 
       {/* Content */}
       <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {activeTab === 'rest-api' ? <ApiSection /> : <SocketSection />}
+        {activeTab === 'rest-api' && <ApiSection />}
+        {activeTab === 'socket-events' && <SocketSection />}
+        {activeTab === 'partner-api' && <PartnerApiSection />}
       </main>
 
       {/* Footer */}
