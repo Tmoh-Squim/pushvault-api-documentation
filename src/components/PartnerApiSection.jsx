@@ -77,10 +77,11 @@ function PartnerApiSection() {
       title: '4. List Devices',
       method: 'GET',
       path: '/api/v1/partner/devices',
-      description: 'List all devices registered to your partner account with activation status and station info.',
+      description: 'List all devices registered to your partner account with activation status, station info, and connected players with balances. Filter by stationRef to show only devices at a specific shop — ideal for cashier dashboards.',
       headers: {
         'X-API-Key': 'pk_your_api_key_here'
       },
+      request: '?stationRef=SHOP_NAIROBI_01',
       response: {
         success: true,
         data: [
@@ -91,17 +92,40 @@ function PartnerApiSection() {
             station: {
               stationId: 'P-BETKING-SHOP_01',
               name: 'BetKing Nairobi CBD',
-              ref: 'SHOP_01'
+              ref: 'SHOP_NAIROBI_01'
             },
-            activeMice: 3,
+            mice: [
+              {
+                mouseId: '001',
+                portId: 'USB1',
+                balance: 1500,
+                totalDeposited: 2000,
+                active: true,
+                customName: 'Player 1',
+                lastUsed: '2026-03-08T12:30:00.000Z'
+              },
+              {
+                mouseId: '002',
+                portId: 'USB2',
+                balance: 0,
+                totalDeposited: 0,
+                active: false,
+                customName: null,
+                lastUsed: null
+              }
+            ],
+            activeMice: 1,
             country: 'kenya',
             registeredAt: '2026-03-01T10:00:00.000Z'
           }
         ]
       },
       notes: [
-        'Returns all devices regardless of activation status',
-        'activeMice shows how many players are currently connected',
+        'Optional query: ?stationRef=YOUR_SHOP_REF — filters devices to a specific station/shop',
+        'Use stationRef filtering for your cashier dashboard so each cashier only sees their shop\'s devices',
+        'mice array includes all connected players with mouseId, balance, and active status',
+        'Your cashier uses mouseId + deviceId to call /deposit or /withdraw',
+        'activeMice is a convenience count of currently active players',
         'station.ref matches the stationRef you sent during activation'
       ]
     },
