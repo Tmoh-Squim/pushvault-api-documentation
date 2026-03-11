@@ -355,7 +355,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '12. Update Station Config (RTP & Limits)',
+      title: '12. Update Station Config (RTP)',
       method: 'PATCH',
       path: '/api/v1/partner/stations/config',
       description: 'Adjust the Return to Player (RTP) percentage, payout limits, or lock/unlock a specific shop. Changes sync to all connected devices in real-time.',
