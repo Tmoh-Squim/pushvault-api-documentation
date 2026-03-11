@@ -36,6 +36,7 @@ function PartnerApiSection() {
       request: {
         code: '123456',
         stationRef: 'SHOP_NAIROBI_01',
+        currency: 'KES',
         stationName: 'BetKing Nairobi CBD',
         agentRef: 'AGENT_JOHN',
         operatorRef: 'OP_NAIROBI'
@@ -53,6 +54,7 @@ function PartnerApiSection() {
         'stationName is the display name (auto-generated if not provided)',
         'agentRef (optional) — your internal agent ID who manages this station',
         'operatorRef (optional) — your internal operator ID who owns this station',
+        `currency - your internal cashier/station operating currency code, default (KES)`,
         'Agent/operator refs are stored on the station and returned in listDevices/listStations',
         'If station already exists, agent/operator refs are updated if provided',
         'Code expires after a set time period',
@@ -351,7 +353,34 @@ function PartnerApiSection() {
         'apiHealth tracks how many webhook calls succeeded vs failed',
         'commissionType: REVENUE_SHARE (% of profit) or BET_VOLUME (% of bets)'
       ]
-    }
+    },
+    {
+      title: '12. Update Station Config (RTP & Limits)',
+      method: 'PATCH',
+      path: '/api/v1/partner/stations/config',
+      description: 'Adjust the Return to Player (RTP) percentage, payout limits, or lock/unlock a specific shop. Changes sync to all connected devices in real-time.',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': 'pk_your_api_key_here'
+      },
+      request: {
+        stationRef: 'SHOP_NAIROBI_01',
+        rtp: 88.5,
+      },
+      response: {
+        success: true,
+        message: 'Config updated for SHOP_NAIROBI_01',
+        config: {
+          globalRTP: 88.5,
+        }
+      },
+      notes: [
+        'stationRef is mandatory to identify which shop to update',
+        'RTP range: 50.0 to 98.0 (prevents house loss or unfair settings)',
+        'Changes are pushed to active terminals via WebSocket instantly',
+        'RTP changes only affect rounds that start AFTER the update is saved'
+      ]
+    },
   ]
 
   const webhookEvents = [
