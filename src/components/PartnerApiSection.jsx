@@ -355,10 +355,10 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '12. Update Station Config (RTP)',
+      title: '12. Update Station Config',
       method: 'PATCH',
       path: '/api/v1/partner/stations/config',
-      description: 'Adjust the Return to Player (RTP) percentage, payout limits, or lock/unlock a specific shop. Changes sync to all connected devices in real-time.',
+      description: 'Adjust station settings: RTP, max stake, bonus percentage, minimum bet enforcement, and station lock. Device-level settings (maxStake, bonusPercentage) are applied to ALL devices under the station. All changes sync in real-time via WebSocket.',
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': 'pk_your_api_key_here'
@@ -366,19 +366,40 @@ function PartnerApiSection() {
       request: {
         stationRef: 'SHOP_NAIROBI_01',
         rtp: 88.5,
+        maxStake: 1000,
+        bonusPercentage: 15,
+        minBetEnforced: true,
+        isLocked: false
       },
       response: {
         success: true,
-        message: 'Config updated for SHOP_NAIROBI_01',
-        config: {
-          globalRTP: 88.5,
+        message: 'Configuration updated for station SHOP_NAIROBI_01',
+        data: {
+          rtp: 88.5,
+          minBetEnforced: true,
+          isLocked: false,
+          maxStake: 1000,
+          bonusPercentage: 15,
+          devicesUpdated: 5
         }
       },
       notes: [
-        'stationRef is mandatory to identify which shop to update',
-        'RTP range: 50.0 to 98.0 (prevents house loss or unfair settings)',
-        'Changes are pushed to active terminals via WebSocket instantly',
-        'RTP changes only affect rounds that start AFTER the update is saved'
+        'stationRef is mandatory — identifies which shop to update',
+        'All other fields are optional — send only the ones you want to change',
+        '',
+        '— Station-level settings (saved on station config) —',
+        'rtp — Return to Player percentage. Range: 50.0 to 98.0',
+        'minBetEnforced (boolean) — when true, players must have at least minimum balance to place a bet. Useful for preventing dust bets',
+        'isLocked (boolean) — when true, gameplay is disabled at this station. Use for closing hours, maintenance, or emergencies. Players can still withdraw',
+        '',
+        '— Device-level settings (applied to ALL devices in the station) —',
+        'maxStake — highest bet amount allowed per player. Must be at least 1. Set based on your currency (e.g. 1000 KES, 150000 ZMW)',
+        'bonusPercentage — bonus % awarded on deposits (0-100). Set to 0 to disable bonuses',
+        'devicesUpdated — returned when maxStake or bonusPercentage is changed, shows how many devices were updated',
+        '',
+        'All changes are pushed to active terminals via WebSocket instantly',
+        'RTP changes only affect rounds that start AFTER the update',
+        'maxStake and minBetEnforced are enforced server-side — players cannot bypass them'
       ]
     },
   ]
