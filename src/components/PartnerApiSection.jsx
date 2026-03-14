@@ -45,6 +45,7 @@ function PartnerApiSection() {
         success: true,
         message: 'Device DEVICE_UUID_001 activated',
         stationId: 'P-BETKING-SHOP_NAIROBI_01',
+        deviceId: 'c966b2af-9450-4e9c-b10b-d49bcecdvbbs',
         stationName: 'BetKing Nairobi CBD'
       },
       notes: [
