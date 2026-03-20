@@ -661,6 +661,66 @@ app.post('/game/bet', (req, res) => {
         <EndpointCard key={`webhook-${index}`} {...event} />
       ))}
 
+      {/* Socket Events */}
+      <h2 className="text-xl font-bold text-green-300 pt-8">⚡ Socket Events (Device ↔ Server)</h2>
+      <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-lg p-4 mb-4">
+        <p className="text-gray-300 text-sm">
+          These are real-time WebSocket events between the game device (exe) and our server.
+          The device connects via Socket.IO and receives game configuration instantly.
+        </p>
+      </div>
+
+      <div className="space-y-4">
+        {/* deviceJoined */}
+        <div className="bg-black/20 border border-green-500/20 rounded-lg p-5">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="bg-green-500/20 text-green-400 px-2 py-0.5 rounded text-xs font-bold">EMIT</span>
+            <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-xs font-bold">Server → Device</span>
+            <code className="text-green-300 font-bold">deviceJoined</code>
+          </div>
+          <p className="text-gray-400 text-sm mb-3">
+            Sent to the device immediately when it joins via <code className="text-purple-300">joinDevice</code> event. 
+            Includes <code className="text-purple-300">currentGame</code> so the exe knows which game to launch.
+          </p>
+          <pre className="bg-black/50 rounded p-3 overflow-x-auto">
+            <code className="text-sm text-green-400">{JSON.stringify({
+              deviceId: 'DEVICE_UUID_001',
+              currentGame: 'both',
+              message: 'Connected successfully'
+            }, null, 2)}</code>
+          </pre>
+          <div className="mt-3 space-y-1">
+            <p className="text-gray-500 text-xs">• Device emits <code className="text-purple-300">joinDevice</code> with deviceId on connect</p>
+            <p className="text-gray-500 text-xs">• Server responds with <code className="text-purple-300">deviceJoined</code> to that specific socket only</p>
+            <p className="text-gray-500 text-xs">• <code className="text-purple-300">currentGame</code>: "aviator" | "pilot" | "both" (default: "both")</p>
+          </div>
+        </div>
+
+        {/* gameChanged */}
+        <div className="bg-black/20 border border-green-500/20 rounded-lg p-5">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="bg-green-500/20 text-green-400 px-2 py-0.5 rounded text-xs font-bold">EMIT</span>
+            <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-xs font-bold">Server → Device</span>
+            <code className="text-green-300 font-bold">gameChanged</code>
+          </div>
+          <p className="text-gray-400 text-sm mb-3">
+            Sent to a specific device when a cashier, admin, or partner changes the game via the <code className="text-purple-300">/devices/set-game</code> endpoint.
+            Device should switch games immediately.
+          </p>
+          <pre className="bg-black/50 rounded p-3 overflow-x-auto">
+            <code className="text-sm text-green-400">{JSON.stringify({
+              deviceId: 'DEVICE_UUID_001',
+              currentGame: 'aviator'
+            }, null, 2)}</code>
+          </pre>
+          <div className="mt-3 space-y-1">
+            <p className="text-gray-500 text-xs">• Emitted only to the target device's socket room — not broadcast</p>
+            <p className="text-gray-500 text-xs">• Triggered by <code className="text-purple-300">POST /devices/set-game</code> from cashier, partner, or admin</p>
+            <p className="text-gray-500 text-xs">• Device should listen for this and switch game without restart</p>
+          </div>
+        </div>
+      </div>
+
       {/* Error Codes */}
       <div className="bg-gradient-to-r from-red-500/10 to-pink-500/10 border border-red-500/30 rounded-lg p-6">
         <h3 className="text-lg font-bold text-red-300 mb-3">⚠️ Error Responses</h3>
