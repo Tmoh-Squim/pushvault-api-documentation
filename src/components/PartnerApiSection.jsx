@@ -127,7 +127,7 @@ function PartnerApiSection() {
       notes: [
         'game must be one of: aviator, pilot, both',
         'Default is "both" (device shows both games)',
-        'Device receives "gameChanged" socket event instantly and switches game',
+        'Device receives "setGame" socket event instantly and switches game',
         'On next launch, device checks currentGame from backend via socket',
         'Device must belong to your partner account',
         'currentGame is also returned in the listDevices response'
@@ -679,20 +679,19 @@ app.post('/game/bet', (req, res) => {
             <code className="text-green-300 font-bold">deviceJoined</code>
           </div>
           <p className="text-gray-400 text-sm mb-3">
-            Sent to the device immediately when it joins via <code className="text-purple-300">joinDevice</code> event. 
-            Includes <code className="text-purple-300">currentGame</code> so the exe knows which game to launch.
+            Sent to the device immediately when it joins via <code className="text-purple-300">joinDevice</code> event.
+            Confirms connection. A separate <code className="text-purple-300">setGame</code> event follows immediately with the game config.
           </p>
           <pre className="bg-black/50 rounded p-3 overflow-x-auto">
             <code className="text-sm text-green-400">{JSON.stringify({
               deviceId: 'DEVICE_UUID_001',
-              currentGame: 'both',
               message: 'Connected successfully'
             }, null, 2)}</code>
           </pre>
           <div className="mt-3 space-y-1">
             <p className="text-gray-500 text-xs">• Device emits <code className="text-purple-300">joinDevice</code> with deviceId on connect</p>
             <p className="text-gray-500 text-xs">• Server responds with <code className="text-purple-300">deviceJoined</code> to that specific socket only</p>
-            <p className="text-gray-500 text-xs">• <code className="text-purple-300">currentGame</code>: "aviator" | "pilot" | "both" (default: "both")</p>
+            <p className="text-gray-500 text-xs">• Immediately followed by a <code className="text-purple-300">setGame</code> event with the current game config</p>
           </div>
         </div>
 
@@ -701,11 +700,11 @@ app.post('/game/bet', (req, res) => {
           <div className="flex items-center gap-2 mb-2">
             <span className="bg-green-500/20 text-green-400 px-2 py-0.5 rounded text-xs font-bold">EMIT</span>
             <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-xs font-bold">Server → Device</span>
-            <code className="text-green-300 font-bold">gameChanged</code>
+            <code className="text-green-300 font-bold">setGame</code>
           </div>
           <p className="text-gray-400 text-sm mb-3">
-            Sent to a specific device when a cashier, admin, or partner changes the game via the <code className="text-purple-300">/devices/set-game</code> endpoint.
-            Device should switch games immediately.
+            Sent to a specific device when a cashier, admin, or partner changes the game via the <code className="text-purple-300">/devices/set-game</code> endpoint, 
+            and also on initial device join. Device only needs to listen for this one event.
           </p>
           <pre className="bg-black/50 rounded p-3 overflow-x-auto">
             <code className="text-sm text-green-400">{JSON.stringify({
