@@ -107,7 +107,34 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '5. Delete Device',
+      title: '5. Set Device Game',
+      method: 'POST',
+      path: '/api/v1/partner/devices/set-game',
+      description: 'Set which game a device should launch. The device receives a real-time socket event and switches immediately.',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': 'pk_your_api_key_here'
+      },
+      request: {
+        deviceId: 'DEVICE_UUID_001',
+        game: 'aviator'
+      },
+      response: {
+        success: true,
+        message: 'Device DEVICE_UUID_001 game set to "aviator"',
+        data: { deviceId: 'DEVICE_UUID_001', currentGame: 'aviator' }
+      },
+      notes: [
+        'game must be one of: aviator, crash, both',
+        'Default is "both" (device shows both games)',
+        'Device receives "gameChanged" socket event instantly and switches game',
+        'On next launch, device checks currentGame from backend via socket',
+        'Device must belong to your partner account',
+        'currentGame is also returned in the listDevices response'
+      ]
+    },
+    {
+      title: '6. Delete Device',
       method: 'POST',
       path: '/api/v1/partner/devices/delete',
       description: 'Remove a device from your partner account. Device is deactivated and unlinked. Can be re-registered later.',
@@ -128,7 +155,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '6. List Devices',
+      title: '7. List Devices',
       method: 'GET',
       path: '/api/v1/partner/devices',
       description: 'List all devices registered to your partner account with activation status, station info, and connected players with balances. Filter by stationRef to show only devices at a specific shop — ideal for cashier dashboards.',
@@ -143,6 +170,7 @@ function PartnerApiSection() {
             deviceId: 'DEVICE_UUID_001',
             isActivated: true,
             customName: 'Terminal 1',
+            currentGame: 'both',
             station: {
               stationId: 'P-BETKING-SHOP_01',
               name: 'BetKing Nairobi CBD',
@@ -189,7 +217,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '7. List Stations',
+      title: '8. List Stations',
       method: 'GET',
       path: '/api/v1/partner/stations',
       description: 'List all your stations/shops with agent and operator references and device counts. Filter by agentRef or operatorRef to see a specific scope.',
@@ -224,7 +252,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '8. Deposit (Player Top-up)',
+      title: '9. Deposit (Player Top-up)',
       method: 'POST',
       path: '/api/v1/partner/deposit',
       description: 'Credit a player\'s balance on a device. Called by your backend when your cashier processes a deposit.',
@@ -256,7 +284,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '9. Withdraw (Player Cash-out)',
+      title: '10. Withdraw (Player Cash-out)',
       method: 'POST',
       path: '/api/v1/partner/withdraw',
       description: 'Debit a player\'s balance on a device. Called by your backend when your cashier processes a withdrawal.',
@@ -285,7 +313,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '10. Get Transactions',
+      title: '11. Get Transactions',
       method: 'GET',
       path: '/api/v1/partner/transactions',
       description: 'Get your partner transaction history with filters and pagination.',
@@ -317,7 +345,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '11. Get Summary',
+      title: '12. Get Summary',
       method: 'GET',
       path: '/api/v1/partner/summary',
       description: 'Get aggregated stats for your partner account — period totals and lifetime figures.',
