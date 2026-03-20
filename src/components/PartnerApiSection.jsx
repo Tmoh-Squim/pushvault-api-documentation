@@ -125,7 +125,7 @@ function PartnerApiSection() {
         data: { deviceId: 'DEVICE_UUID_001', currentGame: 'aviator' }
       },
       notes: [
-        'game must be one of: aviator, crash, both',
+        'game must be one of: aviator, pilot, both',
         'Default is "both" (device shows both games)',
         'Device receives "gameChanged" socket event instantly and switches game',
         'On next launch, device checks currentGame from backend via socket',
