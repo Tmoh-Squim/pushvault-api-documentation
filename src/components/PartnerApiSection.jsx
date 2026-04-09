@@ -359,9 +359,15 @@ function PartnerApiSection() {
           period: {
             totalBets: 250000,
             totalPayouts: 200000,
-            netRevenue: 50000,
+            totalBonuses: 3500,
+            bonusCount: 42,
+            netRevenue: 46500,
             totalTransactions: 1240,
-            apiHealth: { successful: 1230, failed: 10 }
+            apiHealth: { successful: 1230, failed: 10 },
+            bonusesByStation: [
+              { stationRef: 'SHOP_NAIROBI_01', stationName: 'BetKing Nairobi CBD', totalBonuses: 2000, bonusCount: 25 },
+              { stationRef: 'SHOP_MOMBASA_01', stationName: 'BetKing Mombasa', totalBonuses: 1500, bonusCount: 17 }
+            ]
           },
           lifetime: {
             totalBetVolume: 1500000,
@@ -378,6 +384,10 @@ function PartnerApiSection() {
       notes: [
         'Period stats are filtered by startDate/endDate (optional)',
         'Lifetime stats show all-time totals from your partner record',
+        'totalBonuses = total bonus amount awarded to players across all stations in the period',
+        'bonusCount = number of individual bonus awards in the period',
+        'netRevenue = totalBets - totalPayouts - totalBonuses (bonuses reduce net revenue)',
+        'bonusesByStation = per-station breakdown of bonus amounts and counts',
         'outstandingBalance = what you owe us (commission accumulated)',
         'apiHealth tracks how many webhook calls succeeded vs failed',
         'commissionType: REVENUE_SHARE (% of profit) or BET_VOLUME (% of bets)'
