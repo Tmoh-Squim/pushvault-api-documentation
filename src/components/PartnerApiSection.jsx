@@ -360,9 +360,7 @@ function PartnerApiSection() {
             totalDeposits: 1260,
             totalWithdrawals: 792,
             totalBonuses: 176,
-            netProfit: 292,
-            totalTransactions: 1240,
-            apiHealth: { successful: 1230, failed: 10 }
+            netProfit: 468
           },
           stations: [
             {
@@ -370,22 +368,13 @@ function PartnerApiSection() {
               stationId: 'P-BETKING-SHOP_NAIROBI_01',
               stationName: 'BetKing Nairobi CBD',
               currency: 'KES',
-              rtp: 83,
+              rtp: 62.9,
               deposits: 1260,
               withdrawals: 792,
               bonuses: 176,
-              profit: 292
+              profit: 468
             }
           ],
-          lifetime: {
-            totalBetVolume: 1500000,
-            totalPayouts: 1200000,
-            grossGameRevenue: 300000,
-            ourCommission: 45000,
-            outstandingBalance: 12000,
-            commissionRate: 15,
-            commissionType: 'REVENUE_SHARE'
-          },
           devices: { total: 25, active: 18 }
         }
       },
@@ -393,12 +382,8 @@ function PartnerApiSection() {
         'Period stats are filtered by startDate/endDate (optional)',
         'stations array = per-station breakdown with deposits, withdrawals, bonuses, RTP, and profit',
         'profit = deposits - withdrawals (bonuses shown separately, not deducted)',
-        'rtp = actual realized RTP: (withdrawals / deposits) × 100. Returns 0 if no deposits',
-        'Period totals (totalDeposits, totalWithdrawals, totalBonuses, netProfit) are sums across all stations',
-        'Lifetime stats show all-time totals from your partner record',
-        'outstandingBalance = what you owe us (commission accumulated)',
-        'apiHealth tracks how many webhook calls succeeded vs failed',
-        'commissionType: REVENUE_SHARE (% of profit) or BET_VOLUME (% of bets)'
+        'rtp = actual realized RTP: (withdrawals / deposits) \u00d7 100. Returns 0 if no deposits',
+        'Period totals (totalDeposits, totalWithdrawals, totalBonuses, netProfit) are sums across all stations'
       ]
     },
     {
