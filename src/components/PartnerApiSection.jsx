@@ -560,6 +560,42 @@ function PartnerApiSection() {
       ]
     },
     {
+      title: 'Webhook: JACKPOT_WON',
+      method: 'POST',
+      path: 'YOUR_CALLBACK_URL/game/jackpot',
+      description: 'Sent when a player on one of your devices wins a jackpot (Device, Silver, or Gold).',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': 'your_partner_api_key',
+        'X-Signature': 'hmac_sha256_signature'
+      },
+      request: {
+        event: 'JACKPOT_WON',
+        deviceId: 'DEVICE_UUID_001',
+        mouseId: '001',
+        jackpotType: 'DEVICE',
+        amount: 5000,
+        currency: 'KES',
+        multiplier: 3.45,
+        roundId: '65f1a2b3c4d5e6f7...',
+        isPrizeMode: false,
+        balanceAfter: 6200,
+        stationRef: 'SHOP_NAIROBI_01',
+        agentRef: 'AGENT_JOHN',
+        operatorRef: 'OP_NAIROBI',
+        transactionId: 'CREDIT-DEVICE_UUID_001-1712654400000...',
+        timestamp: '2026-03-08T12:02:00.000Z'
+      },
+      notes: [
+        'jackpotType: DEVICE (per-device pool), SILVER (shared mid-tier), or GOLD (shared top-tier)',
+        'amount = jackpot pool amount credited to the winner (converted to device currency)',
+        'multiplier = the flight multiplier at which the jackpot dropped',
+        'isPrizeMode: if true, winner gets a physical prize instead of balance credit — balanceAfter will be absent',
+        'prizeName is included when isPrizeMode is true (e.g. "Jersey", "Phone")',
+        'Player\'s balance is already credited on our side before this webhook fires'
+      ]
+    },
+    {
       title: 'Webhook: ROUND_COMPLETED',
       method: 'POST',
       path: 'YOUR_CALLBACK_URL/game/round-result',
