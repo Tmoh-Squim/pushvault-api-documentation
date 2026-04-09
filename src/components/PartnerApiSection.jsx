@@ -357,18 +357,26 @@ function PartnerApiSection() {
         success: true,
         data: {
           period: {
-            totalBets: 250000,
-            totalPayouts: 200000,
-            totalBonuses: 3500,
-            bonusCount: 42,
-            netRevenue: 46500,
+            totalDeposits: 1260,
+            totalWithdrawals: 792,
+            totalBonuses: 176,
+            netProfit: 292,
             totalTransactions: 1240,
-            apiHealth: { successful: 1230, failed: 10 },
-            bonusesByStation: [
-              { stationRef: 'SHOP_NAIROBI_01', stationName: 'BetKing Nairobi CBD', totalBonuses: 2000, bonusCount: 25 },
-              { stationRef: 'SHOP_MOMBASA_01', stationName: 'BetKing Mombasa', totalBonuses: 1500, bonusCount: 17 }
-            ]
+            apiHealth: { successful: 1230, failed: 10 }
           },
+          stations: [
+            {
+              stationRef: 'SHOP_NAIROBI_01',
+              stationId: 'P-BETKING-SHOP_NAIROBI_01',
+              stationName: 'BetKing Nairobi CBD',
+              currency: 'KES',
+              rtp: 83,
+              deposits: 1260,
+              withdrawals: 792,
+              bonuses: 176,
+              profit: 292
+            }
+          ],
           lifetime: {
             totalBetVolume: 1500000,
             totalPayouts: 1200000,
@@ -383,11 +391,11 @@ function PartnerApiSection() {
       },
       notes: [
         'Period stats are filtered by startDate/endDate (optional)',
+        'stations array = per-station breakdown with deposits, withdrawals, bonuses, RTP, and profit',
+        'profit = deposits - withdrawals - bonuses (same formula as internal admin dashboard)',
+        'rtp = the station\'s configured Return to Player percentage',
+        'Period totals (totalDeposits, totalWithdrawals, totalBonuses, netProfit) are sums across all stations',
         'Lifetime stats show all-time totals from your partner record',
-        'totalBonuses = total bonus amount awarded to players across all stations in the period',
-        'bonusCount = number of individual bonus awards in the period',
-        'netRevenue = totalBets - totalPayouts - totalBonuses (bonuses reduce net revenue)',
-        'bonusesByStation = per-station breakdown of bonus amounts and counts',
         'outstandingBalance = what you owe us (commission accumulated)',
         'apiHealth tracks how many webhook calls succeeded vs failed',
         'commissionType: REVENUE_SHARE (% of profit) or BET_VOLUME (% of bets)'
