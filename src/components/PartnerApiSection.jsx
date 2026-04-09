@@ -526,6 +526,37 @@ function PartnerApiSection() {
       ]
     },
     {
+      title: 'Webhook: BONUS_AWARDED',
+      method: 'POST',
+      path: 'YOUR_CALLBACK_URL/game/bonus',
+      description: 'Sent when a player is awarded a bonus (e.g. zero-balance or low-balance bonus after losing a round).',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': 'your_partner_api_key',
+        'X-Signature': 'hmac_sha256_signature'
+      },
+      request: {
+        event: 'BONUS_AWARDED',
+        deviceId: 'DEVICE_UUID_001',
+        mouseId: '001',
+        amount: 50,
+        balanceAfter: 50,
+        reason: 'ZERO_BALANCE',
+        stationRef: 'SHOP_NAIROBI_01',
+        agentRef: 'AGENT_JOHN',
+        operatorRef: 'OP_NAIROBI',
+        transactionId: 'CREDIT-DEVICE_UUID_001-1712654400000...',
+        timestamp: '2026-03-08T12:01:30.000Z'
+      },
+      notes: [
+        'Triggered when a player\'s balance hits zero (or below minimum) after losing a round',
+        'amount = bonus credited (calculated from bonusPercentage × totalDeposited)',
+        'reason: ZERO_BALANCE (balance is 0) or LOW_BALANCE (below minimum bet threshold)',
+        'Player\'s balance is already credited on our side before this webhook fires',
+        'Only awarded if player has deposits, has not withdrawn, and bonusPercentage > 0'
+      ]
+    },
+    {
       title: 'Webhook: ROUND_COMPLETED',
       method: 'POST',
       path: 'YOUR_CALLBACK_URL/game/round-result',
