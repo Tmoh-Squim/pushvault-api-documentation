@@ -392,8 +392,8 @@ function PartnerApiSection() {
       notes: [
         'Period stats are filtered by startDate/endDate (optional)',
         'stations array = per-station breakdown with deposits, withdrawals, bonuses, RTP, and profit',
-        'profit = deposits - withdrawals - bonuses (same formula as internal admin dashboard)',
-        'rtp = the station\'s configured Return to Player percentage',
+        'profit = deposits - withdrawals (bonuses shown separately, not deducted)',
+        'rtp = actual realized RTP: (withdrawals / deposits) × 100. Returns 0 if no deposits',
         'Period totals (totalDeposits, totalWithdrawals, totalBonuses, netProfit) are sums across all stations',
         'Lifetime stats show all-time totals from your partner record',
         'outstandingBalance = what you owe us (commission accumulated)',
