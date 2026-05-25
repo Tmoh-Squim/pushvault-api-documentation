@@ -117,15 +117,15 @@ function PartnerApiSection() {
       },
       request: {
         deviceId: 'DEVICE_UUID_001',
-        game: 'aviator'
+        game: 'fury'
       },
       response: {
         success: true,
-        message: 'Device DEVICE_UUID_001 game set to "aviator"',
-        data: { deviceId: 'DEVICE_UUID_001', currentGame: 'aviator' }
+        message: 'Device DEVICE_UUID_001 game set to "fury"',
+        data: { deviceId: 'DEVICE_UUID_001', currentGame: 'fury' }
       },
       notes: [
-        'game must be one of: aviator, pilot, both',
+        'game must be one of: aviator, pilot, fury, both',
         'Default is "both" (device shows both games)',
         'Device receives "setGame" socket event instantly and switches game',
         'On next launch, device checks currentGame from backend via socket',
@@ -779,7 +779,7 @@ app.post('/game/bet', (req, res) => {
           <pre className="bg-black/50 rounded p-3 overflow-x-auto">
             <code className="text-sm text-green-400">{JSON.stringify({
               deviceId: 'DEVICE_UUID_001',
-              currentGame: 'aviator'
+              currentGame: 'fury'
             }, null, 2)}</code>
           </pre>
           <div className="mt-3 space-y-1">
