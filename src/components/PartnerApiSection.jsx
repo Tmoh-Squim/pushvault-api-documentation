@@ -317,7 +317,41 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '11. Get Transactions',
+      title: '11. Create Cashier Socket Token',
+      method: 'POST',
+      path: '/api/v1/partner/socket-token',
+      description: 'Called by your backend to create a station-bound Socket.IO token for one cashier session. Use this instead of exposing your partner API key in the browser.',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': 'pk_your_api_key_here'
+      },
+      request: {
+        stationRef: 'SHOP_NAIROBI_01',
+        cashierRef: 'cashier_john_123',
+        expiresInHours: 24
+      },
+      response: {
+        success: true,
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+        expiresAt: '2026-06-10T12:00:00.000Z',
+        expiresInHours: 24,
+        station: {
+          stationId: 'P-BETKING-SHOP_NAIROBI_01',
+          stationRef: 'SHOP_NAIROBI_01',
+          name: 'BetKing Nairobi CBD'
+        },
+        cashierRef: 'cashier_john_123'
+      },
+      notes: [
+        'Call this from your backend only — never from the browser',
+        'stationRef is mandatory and locks the token to one shop',
+        'Use 12 or 24 hours depending on your cashier session policy',
+        'Maximum token lifetime is 24 hours',
+        'The returned token is what your cashier frontend uses for joinPartnerRoom'
+      ]
+    },
+    {
+      title: '12. Get Transactions',
       method: 'GET',
       path: '/api/v1/partner/transactions',
       description: 'Get your partner transaction history with filters and pagination.',
@@ -349,7 +383,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '12. Get Summary',
+      title: '13. Get Summary',
       method: 'GET',
       path: '/api/v1/partner/summary',
       description: 'Get aggregated stats for your partner account — period totals and lifetime figures.',
@@ -391,7 +425,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '12. Update Station Config',
+      title: '14. Update Station Config',
       method: 'PATCH',
       path: '/api/v1/partner/stations/config',
       description: 'Adjust station settings: RTP, max stake, bonus percentage, minimum bet enforcement, and station lock. Device-level settings (maxStake, bonusPercentage) are applied to ALL devices under the station. All changes sync in real-time via WebSocket.',
@@ -679,6 +713,43 @@ function PartnerApiSection() {
             <span className="bg-blue-500/20 text-blue-400 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">6</span>
             <span><strong className="text-white">Settlement:</strong> Commission accumulates from game revenue. Settle periodically as agreed</span>
           </div>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/30 rounded-lg p-6">
+        <h3 className="text-lg font-bold text-emerald-300 mb-3">⚡ Partner Cashier Realtime (Socket.IO)</h3>
+        <p className="text-gray-300 mb-3 text-sm">
+          Partner cashier dashboards can subscribe to live device and mouse events the same way our internal cashier dashboard does.
+          Connect to the main Socket.IO server, then join your partner room after connect.
+        </p>
+        <pre className="bg-black/50 rounded p-4 overflow-x-auto">
+          <code className="text-sm text-green-400">{`import { io } from "socket.io-client";
+
+// 1. Your backend first calls POST /api/v1/partner/socket-token
+//    and returns { token } to the logged-in cashier frontend.
+const socketToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
+
+const socket = io("https://server.pushvault.shop", {
+  transports: ["websocket", "polling"],
+  withCredentials: true,
+});
+
+socket.on("connect", () => {
+  socket.emit("joinPartnerRoom", {
+    token: socketToken
+  });
+});
+
+socket.on("partner:connected", (data) => {
+  console.log("Partner socket ready", data);
+});`}</code>
+        </pre>
+        <div className="mt-4 space-y-1 text-sm text-gray-300">
+          <p>Your backend must create the token first via <code className="text-purple-300">POST /api/v1/partner/socket-token</code>.</p>
+          <p><code className="text-purple-300">stationRef</code> is mandatory on token creation. A partner cashier socket must always bind to exactly one shop.</p>
+          <p>Listen for: <code className="text-purple-300">deviceActivated</code>, <code className="text-purple-300">deviceDeactivated</code>, <code className="text-purple-300">device:update</code>, <code className="text-purple-300">device:online</code>, <code className="text-purple-300">device:offline</code></p>
+          <p>Also listen for: <code className="text-purple-300">mouse:connected</code>, <code className="text-purple-300">mouse:disconnected</code>, <code className="text-purple-300">deviceInfoUpdate</code>, <code className="text-purple-300">balanceUpdate</code>, <code className="text-purple-300">stationBalanceUpdate</code></p>
+          <p><code className="text-purple-300">partner:error</code> is emitted if the socket token is invalid, expired, suspended, disabled, or carries the wrong station scope.</p>
         </div>
       </div>
 
