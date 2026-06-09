@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import ApiSection from './components/ApiSection'
-import SocketSection from './components/SocketSection'
 import PartnerApiSection from './components/PartnerApiSection'
 
 function App() {
@@ -16,7 +15,7 @@ function App() {
               <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 break-words leading-tight">
                 🎮 Game Device API
               </h1>
-              <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">Complete reference for device integration</p>
+              <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">REST and partner integration reference</p>
             </div>
             <div className="text-right flex-shrink-0">
               <p className="text-purple-300 text-xs sm:text-sm font-mono">v1.0.0</p>
@@ -41,16 +40,6 @@ function App() {
               📡 REST API
             </button>
             <button
-              onClick={() => setActiveTab('socket-events')}
-              className={`px-4 sm:px-6 py-3 font-semibold text-sm sm:text-base transition-all duration-200 border-b-2 ${
-                activeTab === 'socket-events'
-                  ? 'border-purple-500 text-purple-400'
-                  : 'border-transparent text-gray-400 hover:text-purple-300'
-              }`}
-            >
-              🔌 Socket Events
-            </button>
-            <button
               onClick={() => setActiveTab('partner-api')}
               className={`px-4 sm:px-6 py-3 font-semibold text-sm sm:text-base transition-all duration-200 border-b-2 ${
                 activeTab === 'partner-api'
@@ -67,7 +56,6 @@ function App() {
       {/* Content */}
       <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {activeTab === 'rest-api' && <ApiSection />}
-        {activeTab === 'socket-events' && <SocketSection />}
         {activeTab === 'partner-api' && <PartnerApiSection />}
       </main>
 
