@@ -210,8 +210,8 @@ function PartnerApiSection() {
         'Optional query: ?operatorRef=YOUR_OPERATOR_ID — filters devices owned by a specific operator',
         'All filters can be combined: ?agentRef=AGENT_1&stationRef=SHOP_01',
         'Use stationRef filtering for your cashier dashboard so each cashier only sees their shop\'s devices',
-        'mice array includes all connected players with mouseId, balance, and active status',
-        'Your cashier uses mouseId + deviceId to call /deposit or /withdraw',
+        'mice array includes all connected players with mouseId, portId, balance, and active status',
+        'Your cashier should send deviceId + mouseId + portId when calling /deposit or /withdraw',
         'activeMice is a convenience count of currently active players',
         'station.ref matches the stationRef you sent during activation'
       ]
@@ -263,6 +263,7 @@ function PartnerApiSection() {
       request: {
         deviceId: 'DEVICE_UUID_001',
         mouseId: '001',
+        portId: 'USB1',
         amount: 500,
         cashierRef: 'cashier_john_123'
       },
@@ -276,6 +277,7 @@ function PartnerApiSection() {
         'Minimum deposit: 10',
         'Device must be activated and belong to your partner account',
         'mouseId is the hardware mouse identifier on the device',
+        'portId is the physical mouse slot on the device and should always be sent together with mouseId',
         'cashierRef is optional — pass your own cashier ID for your records',
         'Player balance updates instantly on the game screen via WebSocket',
         'Blocked if partner is SUSPENDED or DISABLED',
@@ -295,6 +297,7 @@ function PartnerApiSection() {
       request: {
         deviceId: 'DEVICE_UUID_001',
         mouseId: '001',
+        portId: 'USB1',
         amount: 200,
         cashierRef: 'cashier_john_123'
       },
@@ -308,6 +311,7 @@ function PartnerApiSection() {
         'Fails if player balance is insufficient',
         'Withdrawals are always allowed even if partner is SUSPENDED (players can cash out)',
         'Device must be activated and belong to your partner account',
+        'Send portId together with mouseId so the correct physical slot is targeted',
         'Player balance updates instantly on the game screen via WebSocket',
         'If player hasn\'t played any game since last deposit, totalDeposited is adjusted'
       ]
@@ -661,7 +665,7 @@ function PartnerApiSection() {
           </div>
           <div className="flex items-start gap-3">
             <span className="bg-blue-500/20 text-blue-400 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
-            <span><strong className="text-white">Deposit:</strong> Your cashier tops up a player → your backend calls <code className="text-purple-300">/deposit</code> → player balance updates on game screen</span>
+            <span><strong className="text-white">Deposit:</strong> Your cashier picks the device + player slot → your backend calls <code className="text-purple-300">/deposit</code> with <code className="text-purple-300">deviceId</code>, <code className="text-purple-300">mouseId</code>, and <code className="text-purple-300">portId</code> → player balance updates on game screen</span>
           </div>
           <div className="flex items-start gap-3">
             <span className="bg-blue-500/20 text-blue-400 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</span>
@@ -669,7 +673,7 @@ function PartnerApiSection() {
           </div>
           <div className="flex items-start gap-3">
             <span className="bg-blue-500/20 text-blue-400 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">5</span>
-            <span><strong className="text-white">Withdraw:</strong> Player wants cash → your cashier calls <code className="text-purple-300">/withdraw</code> → balance debited on game screen</span>
+            <span><strong className="text-white">Withdraw:</strong> Player wants cash → your backend calls <code className="text-purple-300">/withdraw</code> with <code className="text-purple-300">deviceId</code>, <code className="text-purple-300">mouseId</code>, and <code className="text-purple-300">portId</code> → balance debited on game screen</span>
           </div>
           <div className="flex items-start gap-3">
             <span className="bg-blue-500/20 text-blue-400 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">6</span>
