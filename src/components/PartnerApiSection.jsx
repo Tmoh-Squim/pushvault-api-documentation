@@ -134,7 +134,54 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '6. Delete Device',
+      title: '6. List Available Games',
+      method: 'GET',
+      path: '/api/v1/partner/games',
+      description: 'Fetch the games your partner cashiers are allowed to assign to devices. Use this to populate the game selector in your cashier dashboard instead of hardcoding values.',
+      headers: {
+        'X-API-Key': 'pk_your_api_key_here'
+      },
+      response: {
+        success: true,
+        data: [
+          {
+            key: 'both',
+            name: 'All Games',
+            launchUrl: null,
+            posterUrl: null,
+            sortOrder: 0
+          },
+          {
+            key: 'aviator',
+            name: 'Aviator',
+            launchUrl: 'https://aviator.pushvault.shop',
+            posterUrl: null,
+            sortOrder: 1
+          },
+          {
+            key: 'pilot',
+            name: 'Pilot',
+            launchUrl: 'https://pilot.pushvault.shop',
+            posterUrl: null,
+            sortOrder: 2
+          },
+          {
+            key: 'fury',
+            name: 'Fury',
+            launchUrl: 'https://fury.pushvault.shop',
+            posterUrl: null,
+            sortOrder: 3
+          }
+        ]
+      },
+      notes: [
+        'Use this endpoint to build the cashier game dropdown dynamically',
+        'Only active games are returned, plus the built-in "both" option',
+        'Send one of the returned keys to /api/v1/partner/devices/set-game'
+      ]
+    },
+    {
+      title: '7. Delete Device',
       method: 'POST',
       path: '/api/v1/partner/devices/delete',
       description: 'Remove a device from your partner account. Device is deactivated and unlinked. Can be re-registered later.',
@@ -155,7 +202,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '7. List Devices',
+      title: '8. List Devices',
       method: 'GET',
       path: '/api/v1/partner/devices',
       description: 'List all devices registered to your partner account with activation status, station info, and connected players with balances. Filter by stationRef to show only devices at a specific shop — ideal for cashier dashboards.',
@@ -217,7 +264,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '8. List Stations',
+      title: '9. List Stations',
       method: 'GET',
       path: '/api/v1/partner/stations',
       description: 'List all your stations/shops with agent and operator references and device counts. Filter by agentRef or operatorRef to see a specific scope.',
@@ -252,7 +299,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '9. Deposit (Player Top-up)',
+      title: '10. Deposit (Player Top-up)',
       method: 'POST',
       path: '/api/v1/partner/deposit',
       description: 'Credit a player\'s balance on a device. Called by your backend when your cashier processes a deposit.',
@@ -286,7 +333,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '10. Withdraw (Player Cash-out)',
+      title: '11. Withdraw (Player Cash-out)',
       method: 'POST',
       path: '/api/v1/partner/withdraw',
       description: 'Debit a player\'s balance on a device. Called by your backend when your cashier processes a withdrawal.',
@@ -317,7 +364,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '11. Create Cashier Socket Token',
+      title: '12. Create Cashier Socket Token',
       method: 'POST',
       path: '/api/v1/partner/socket-token',
       description: 'Called by your backend to create a station-bound Socket.IO token for one cashier session. Use this instead of exposing your partner API key in the browser.',
@@ -351,7 +398,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '12. Get Transactions',
+      title: '13. Get Transactions',
       method: 'GET',
       path: '/api/v1/partner/transactions',
       description: 'Get your partner transaction history with filters and pagination.',
@@ -383,7 +430,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '13. Get Summary',
+      title: '14. Get Summary',
       method: 'GET',
       path: '/api/v1/partner/summary',
       description: 'Get aggregated stats for your partner account — period totals and lifetime figures.',
@@ -425,7 +472,7 @@ function PartnerApiSection() {
       ]
     },
     {
-      title: '14. Update Station Config',
+      title: '15. Update Station Config',
       method: 'PATCH',
       path: '/api/v1/partner/stations/config',
       description: 'Adjust station settings: RTP, max stake, bonus percentage, minimum bet enforcement, and station lock. Device-level settings (maxStake, bonusPercentage) are applied to ALL devices under the station. All changes sync in real-time via WebSocket.',
@@ -717,7 +764,7 @@ function PartnerApiSection() {
       </div>
 
       <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/30 rounded-lg p-6">
-        <h3 className="text-lg font-bold text-emerald-300 mb-3">⚡ Partner Cashier Realtime (Socket.IO)</h3>
+        <h3 className="text-lg font-bold text-emerald-300 mb-3">⚡ Partner Cashier Dashboard Realtime (Socket.IO)</h3>
         <p className="text-gray-300 mb-3 text-sm">
           Partner cashier dashboards can subscribe to live device and mouse events the same way our internal cashier dashboard does.
           Connect to the main Socket.IO server, then join your partner room after connect.
@@ -747,6 +794,7 @@ socket.on("partner:connected", (data) => {
         <div className="mt-4 space-y-1 text-sm text-gray-300">
           <p>Your backend must create the token first via <code className="text-purple-300">POST /api/v1/partner/socket-token</code>.</p>
           <p><code className="text-purple-300">stationRef</code> is mandatory on token creation. A partner cashier socket must always bind to exactly one shop.</p>
+          <p>This is the realtime feed your partner cashier dashboard should consume.</p>
           <p>Listen for: <code className="text-purple-300">deviceActivated</code>, <code className="text-purple-300">deviceDeactivated</code>, <code className="text-purple-300">device:update</code>, <code className="text-purple-300">device:online</code>, <code className="text-purple-300">device:offline</code></p>
           <p>Also listen for: <code className="text-purple-300">mouse:connected</code>, <code className="text-purple-300">mouse:disconnected</code>, <code className="text-purple-300">deviceInfoUpdate</code>, <code className="text-purple-300">balanceUpdate</code>, <code className="text-purple-300">stationBalanceUpdate</code></p>
           <p><code className="text-purple-300">partner:error</code> is emitted if the socket token is invalid, expired, suspended, disabled, or carries the wrong station scope.</p>
