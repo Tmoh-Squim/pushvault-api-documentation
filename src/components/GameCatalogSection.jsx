@@ -4,7 +4,7 @@ const games = [
   { title: 'Aviator', gameId: 'aviator', providerGameId: 'aviator', gameKey: 'AVIATOR', configGameKey: 'AVIATOR', category: 'crash', rtp: 97 },
   { title: 'Pilot', gameId: 'crash', providerGameId: 'pilot', gameKey: 'PILOT', configGameKey: 'CRASH', category: 'crash', rtp: 99 },
   { title: 'Chicken Crash', gameId: 'chicken-crash', providerGameId: 'chickencrash', gameKey: 'CHICKEN', configGameKey: 'CHICKEN', category: 'crash', rtp: 97 },
-  { title: 'Spank', gameId: 'spank', providerGameId: 'spank', gameKey: 'SPANK', configGameKey: 'SPANK', category: 'mini-games', rtp: 97 },
+  { title: 'Spank', gameId: 'spank', providerGameId: 'spank', gameKey: 'SPANK', configGameKey: 'SPANK', category: 'mini-games', rtp: 95 },
 ]
 
 const backendExample = [
