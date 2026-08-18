@@ -81,7 +81,6 @@ function GameLaunchSection() {
       notes: [
         'Generate a fresh random token for every demo launch',
         'Demo gameplay still runs through PushVault authenticated APIs, but PushVault does not call your validate, balance, debit, or credit wallet endpoints',
-        'Opening SPANK without any token starts a local guest demo using the default difficulty RTP profile (Easy 95%, Medium 90%, Hard 85%, Hardcore 80%); it is not associated with a partner or wallet',
         'Demo currency comes from this request, then falls back to the partner currency and KES',
         'isDemo is embedded in the signed JWT; never append it to the iframe URL',
         'Catalogue demoUrl is intentionally empty',

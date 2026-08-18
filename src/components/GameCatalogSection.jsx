@@ -1,10 +1,10 @@
 import EndpointCard from './EndpointCard'
 
 const games = [
-  { title: 'Aviator', gameId: 'aviator', providerGameId: 'aviator', gameKey: 'AVIATOR', configGameKey: 'AVIATOR', category: 'crash', rtp: 97 },
-  { title: 'Pilot', gameId: 'crash', providerGameId: 'pilot', gameKey: 'PILOT', configGameKey: 'CRASH', category: 'crash', rtp: 99 },
-  { title: 'Chicken Crash', gameId: 'chicken-crash', providerGameId: 'chickencrash', gameKey: 'CHICKEN', configGameKey: 'CHICKEN', category: 'crash', rtp: 97 },
-  { title: 'Spank', gameId: 'spank', providerGameId: 'spank', gameKey: 'SPANK', configGameKey: 'SPANK', category: 'mini-games', rtp: 95 },
+  { title: 'Aviator', gameId: 'aviator', providerGameId: 'aviator', gameKey: 'AVIATOR', configGameKey: 'AVIATOR', category: 'crash' },
+  { title: 'Pilot', gameId: 'crash', providerGameId: 'pilot', gameKey: 'PILOT', configGameKey: 'CRASH', category: 'crash' },
+  { title: 'Chicken Crash', gameId: 'chicken-crash', providerGameId: 'chickencrash', gameKey: 'CHICKEN', configGameKey: 'CHICKEN', category: 'crash' },
+  { title: 'Spank', gameId: 'spank', providerGameId: 'spank', gameKey: 'SPANK', configGameKey: 'SPANK', category: 'mini-games' },
 ]
 
 const backendExample = [
@@ -35,7 +35,7 @@ function GameCatalogSection() {
       <div className="bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 border border-emerald-500/30 rounded-lg p-6">
         <h2 className="text-2xl font-bold text-emerald-300 mb-3">PushVault Game Catalogue</h2>
         <p className="text-gray-300">
-          Fetch the current PushVault games from your trusted backend. The catalogue is the source of truth for stable identities, artwork, launch URLs, flags, ordering, and RTP metadata.
+          Fetch the current PushVault games from your trusted backend. The catalogue is the source of truth for stable identities, artwork, launch URLs, availability, and ordering.
         </p>
       </div>
 
@@ -93,7 +93,7 @@ function GameCatalogSection() {
         <table className="w-full text-sm text-left">
           <thead className="bg-slate-800 text-gray-200">
             <tr>
-              {['Game', 'gameId', 'providerGameId', 'gameKey', 'configGameKey', 'Category', 'RTP'].map((heading) => (
+              {['Game', 'gameId', 'providerGameId', 'gameKey', 'configGameKey', 'Category'].map((heading) => (
                 <th key={heading} className="p-3 whitespace-nowrap">{heading}</th>
               ))}
             </tr>
@@ -107,7 +107,6 @@ function GameCatalogSection() {
                 <td className="p-3 font-mono">{game.gameKey}</td>
                 <td className="p-3 font-mono">{game.configGameKey}</td>
                 <td className="p-3">{game.category}</td>
-                <td className="p-3">{game.rtp}%</td>
               </tr>
             ))}
           </tbody>
@@ -118,7 +117,7 @@ function GameCatalogSection() {
         <div className="bg-slate-900/60 border border-slate-700 rounded-lg p-5">
           <h3 className="text-lg font-bold text-cyan-300 mb-3">Fields returned per game</h3>
           <p className="text-sm text-gray-300 font-mono leading-7">
-            gameId, providerGameId, gameKey, configGameKey, title, provider, category, thumbnail, iframeBaseUrl, demoUrl, demoSupported, sortOrder, isActive, isFeatured, isHot, isNew, isLive, rtp, players
+            gameId, providerGameId, gameKey, configGameKey, title, provider, category, thumbnail, iframeBaseUrl, demoUrl, demoSupported, sortOrder, isActive, isFeatured, isHot, isNew, isLive
           </p>
         </div>
         <div className="bg-slate-900/60 border border-slate-700 rounded-lg p-5">
