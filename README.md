@@ -11,6 +11,16 @@ Interactive web-based documentation for the HugeWins crash game device integrati
 - 🎨 **Beautiful UI** - Gradient design with dark theme
 - 💻 **Code Examples** - Live examples for every endpoint and event
 
+## PushVault Provider Games
+
+- Game Catalogue tab documents Aviator, Pilot, Chicken Crash, and Spank.
+- Catalogue requests require both X-Api-Key and X-Api-Secret.
+- Catalogue and launch requests must be made from a trusted backend.
+- Real-money and demo launches use the same token exchange.
+- Demo passes isDemo: true in the server-to-server request.
+- Currency and demo state are carried in the signed JWT, not iframe query parameters.
+- Never expose the partner API secret in browser or mobile code.
+
 ## Tech Stack
 
 - React 18

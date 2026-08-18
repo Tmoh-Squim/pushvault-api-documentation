@@ -2,6 +2,8 @@ import { useState } from 'react'
 import ApiSection from './components/ApiSection'
 import PartnerApiSection from './components/PartnerApiSection'
 import PartnerSocketSection from './components/PartnerSocketSection'
+import GameCatalogSection from './components/GameCatalogSection'
+import GameLaunchSection from './components/GameLaunchSection'
 
 function App() {
   const [activeTab, setActiveTab] = useState('rest-api')
@@ -29,7 +31,7 @@ function App() {
       {/* Navigation Tabs - Sticky */}
       <div className="bg-gradient-to-b from-slate-900 to-slate-900/95 backdrop-blur-md sticky top-0 z-[45] border-b border-purple-500/20">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex space-x-2 sm:space-x-4">
+          <div className="flex space-x-2 sm:space-x-4 overflow-x-auto">
             <button
               onClick={() => setActiveTab('rest-api')}
               className={`px-4 sm:px-6 py-3 font-semibold text-sm sm:text-base transition-all duration-200 border-b-2 ${
@@ -60,6 +62,26 @@ function App() {
             >
               🔌 Partner Sockets
             </button>
+            <button
+              onClick={() => setActiveTab('game-catalog')}
+              className={'px-4 sm:px-6 py-3 font-semibold text-sm sm:text-base whitespace-nowrap transition-all duration-200 border-b-2 ' + (
+                activeTab === 'game-catalog'
+                  ? 'border-purple-500 text-purple-400'
+                  : 'border-transparent text-gray-400 hover:text-purple-300'
+              )}
+            >
+              Game Catalogue
+            </button>
+            <button
+              onClick={() => setActiveTab('game-launch')}
+              className={'px-4 sm:px-6 py-3 font-semibold text-sm sm:text-base whitespace-nowrap transition-all duration-200 border-b-2 ' + (
+                activeTab === 'game-launch'
+                  ? 'border-purple-500 text-purple-400'
+                  : 'border-transparent text-gray-400 hover:text-purple-300'
+              )}
+            >
+              Game Launch
+            </button>
           </div>
         </div>
       </div>
@@ -69,6 +91,8 @@ function App() {
         {activeTab === 'rest-api' && <ApiSection />}
         {activeTab === 'partner-api' && <PartnerApiSection />}
         {activeTab === 'partner-sockets' && <PartnerSocketSection />}
+        {activeTab === 'game-catalog' && <GameCatalogSection />}
+        {activeTab === 'game-launch' && <GameLaunchSection />}
       </main>
 
       {/* Footer */}
