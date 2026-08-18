@@ -69,6 +69,8 @@ function GameCatalogSection() {
               providerGameId: 'spank',
               gameKey: 'SPANK',
               configGameKey: 'SPANK',
+              thumbnail: 'https://spank.pushvault.shop/assets/game_icon.png',
+              iframeBaseUrl: 'https://spank.pushvault.shop',
               demoUrl: '',
               demoSupported: true,
             },
