@@ -80,7 +80,7 @@ function GameLaunchSection() {
       },
       notes: [
         'Generate a fresh random token for every demo launch',
-        'Demo does not call validate, balance, debit, or credit wallet endpoints',
+        'Demo gameplay still runs through PushVault authenticated APIs, but PushVault does not call your validate, balance, debit, or credit wallet endpoints',
         'Demo currency comes from this request, then falls back to the partner currency and KES',
         'isDemo is embedded in the signed JWT; never append it to the iframe URL',
         'Catalogue demoUrl is intentionally empty',
